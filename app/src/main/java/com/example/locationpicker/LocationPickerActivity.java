@@ -72,7 +72,7 @@ public class LocationPickerActivity extends FragmentActivity implements OnMapRea
         floatingActionButtonLocation.setOnClickListener(v -> getCurrentLocation());
 
         // Initialize Places.
-        Places.initialize(getApplicationContext(), "AIzaSyBSZswcDe5ittJcxoqqr02-vroTt63ITAw");
+        Places.initialize(getApplicationContext(), BuildConfig.GOOGLE_API_KEY);
 
         resultReceiver = new AddressResultReceiver(new Handler());
 
