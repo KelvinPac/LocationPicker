@@ -1,0 +1,27 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">LocationPicker</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_location_picker">Map</string>
+
+    <string name="leku_app_name" translatable="false" tools:ignore="UnusedResources">Leku</string>
+    <string name="leku_title_activity_location_picker" tools:ignore="UnusedResources">Location Picker</string>
+    <string name="leku_no_geocoder_available">Service not available</string>
+    <string name="leku_load_location_error">Something went wrong. Please try again.</string>
+    <string name="leku_no_search_results">There are no results for your search</string>
+    <string name="leku_network_resource">network</string>
+    <string name="leku_unknown_location">unknown location</string>
+    <string name="leku_voice_search_promp">Search by voice…</string>
+    <string name="leku_voice_search_extra_language">en-EN</string>
+    <string name="leku_toolbar_action_voice_title">Voice</string>
+    <string name="leku_search_hint">Search</string>
+    <string name="leku_longitude">Longitude</string>
+    <string name="leku_latitude">Latitude</string>
+    <string name="leku_coordinates">Coordinates</string>
+    <string name="leku_address">Address</string>
+
+    <string name="service_not_available">Address location not available</string>
+    <string name="invalid_lat_long_used">Lat/long are invalid</string>
+    <string name="no_address_found">No address found</string>
+    <string name="address_found">Address found!! :)</string>
+    <string name="no_geocoder_available">Gecoder not available</string>
+</resources>
