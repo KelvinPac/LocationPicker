@@ -33,10 +33,14 @@ import java.util.Arrays;
 
 import mumayank.com.airlocationlibrary.AirLocation;
 
+import static com.example.locationpicker.Constants.EXTRA_LATITUDE;
+import static com.example.locationpicker.Constants.EXTRA_LONGITUDE;
+
 public class LocationPickerActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private static final String TAG = LocationPickerActivity.class.getSimpleName();
     private GoogleMap mMap;
+    public static final int LOCATION_REQUEST_CODE = 418;
 
     /* 1 -> get current location when activity starts
      *  2 -> get current location when location button clicked
@@ -48,7 +52,7 @@ public class LocationPickerActivity extends FragmentActivity implements OnMapRea
      * todo 6 -> on click okay show confirmation dialog and return location */
 
     private AirLocation airLocation;
-    private FloatingActionButton floatingActionButtonLocation;
+    private FloatingActionButton floatingActionButtonLocation,fabBtnAccept;
     private TextView latitude, longitude, address, locationTitle;
     private LatLng midLatLng;
     private ProgressBar progressBar;
@@ -63,6 +67,8 @@ public class LocationPickerActivity extends FragmentActivity implements OnMapRea
         setContentView(R.layout.activity_location_picker);
 
         floatingActionButtonLocation = findViewById(R.id.btnFloatingActionLocation);
+        fabBtnAccept = findViewById(R.id.fabBtnAccept);
+
         latitude = findViewById(R.id.latitude);
         longitude = findViewById(R.id.longitude);
         address = findViewById(R.id.address);
@@ -70,6 +76,7 @@ public class LocationPickerActivity extends FragmentActivity implements OnMapRea
         locationTitle = findViewById(R.id.coordinates_tittle);
 
         floatingActionButtonLocation.setOnClickListener(v -> getCurrentLocation());
+        fabBtnAccept.setOnClickListener(accept -> sendBackLocation());
 
         // Initialize Places.
         Places.initialize(getApplicationContext(), BuildConfig.GOOGLE_API_KEY);
@@ -127,6 +134,23 @@ public class LocationPickerActivity extends FragmentActivity implements OnMapRea
 
         //get current user location
         getCurrentLocation();
+    }
+
+    private void sendBackLocation(){
+
+        if (midLatLng !=null){
+            //todo show dialog to confirm selected location
+            Intent intent = new Intent();
+            intent.putExtra(EXTRA_LATITUDE, String.valueOf(midLatLng.latitude));
+            intent.putExtra(EXTRA_LONGITUDE, String.valueOf(midLatLng.longitude));
+            setResult(RESULT_OK, intent);
+            finish();
+        }else {
+            Intent intent = new Intent();
+            setResult(RESULT_CANCELED, intent);
+            finish();
+        }
+
     }
 
     private void getCurrentLocation() {
@@ -219,11 +243,11 @@ public class LocationPickerActivity extends FragmentActivity implements OnMapRea
         });
     }
 
-    private void getGeoCoderAddress(LatLng midLatLng) {
+    private void getGeoCoderAddress(LatLng currentLatLng) {
 
         Location targetLocation = new Location("");//provider name is unnecessary
-        targetLocation.setLatitude(midLatLng.latitude);
-        targetLocation.setLongitude(midLatLng.longitude);
+        targetLocation.setLatitude(currentLatLng.latitude);
+        targetLocation.setLongitude(currentLatLng.longitude);
 
         //https://developer.android.com/training/location/display-address#java
         Intent intent = new Intent(this, FetchAddressIntentService.class);
